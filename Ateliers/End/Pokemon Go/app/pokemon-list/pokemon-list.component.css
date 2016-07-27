@@ -1,0 +1,20 @@
+.pokemon-image{
+    width: 100px;
+}
+
+.label{
+    font-size: 12px;
+}
+
+.label-grass {
+    background-color: #68AE28;
+}
+.label-fire {
+    background-color: #E50020;
+}
+.label-water {
+    background-color: #749eff;
+}
+.label-electric {
+    background-color: #FFD624;
+}

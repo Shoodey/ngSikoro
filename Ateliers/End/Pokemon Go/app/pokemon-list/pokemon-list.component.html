@@ -1,0 +1,63 @@
+<h3 class="page-header">{{title}} <em>{{errorMessage}}</em></h3>
+
+<div class="panel panel-primary" *ngIf="pokemons && pokemons.length">
+    <div class="panel-heading"></div>
+
+    <div class="panel-body">
+        <div class="row">
+            <div class="col-sm-8">
+                <p>Filtre: <strong>{{filterBy}}</strong></p>
+            </div>
+            <div class="col-sm-4">
+                Filter par
+                <input type="text" [(ngModel)]="filterBy">
+            </div>
+        </div>
+
+        <hr>
+
+        <table class="table table-striped">
+            <thead>
+            <tr>
+                <th>
+                    <button class="btn btn-primary" (click)="toggleImage()">
+                        <i class="fa" [ngClass]="{'fa-eye': showImage, 'fa-eye-slash': !showImage}"></i> Photo
+                    </button>
+                </th>
+                <th>Nom</th>
+                <th>Code</th>
+                <th>Type</th>
+                <th>Poids</th>
+                <th>Taille</th>
+                <th>Rareté</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr *ngFor="let pokemon of pokemons | pokemonFilter:filterBy">
+                <td>
+                    <img *ngIf="showImage"
+                         class="pokemon-image center-block"
+                         [src]="pokemon.image"
+                         [title]="pokemon.name">
+                </td>
+                <td>{{pokemon.name | pokemonUcfirst}}</td>
+                <td>{{pokemon.code}}</td>
+                <td [ngSwitch]="pokemon.type">
+                    <span *ngSwitchCase="'plante'" class="label label-grass">{{pokemon.type | pokemonUcfirst}}</span>
+                    <span *ngSwitchCase="'feu'" class="label label-fire">{{pokemon.type | pokemonUcfirst}}</span>
+                    <span *ngSwitchCase="'eau'" class="label label-water">{{pokemon.type | pokemonUcfirst}}</span>
+                    <span *ngSwitchCase="'electrique'" class="label label-electric">{{pokemon.type | pokemonUcfirst}}</span>
+                    <span *ngSwitchDefault class="label label-default">{{pokemon.type | pokemonUcfirst}}</span>
+                </td>
+                <td>{{pokemon.weight | pokemonWeight}}</td>
+                <td>{{pokemon.height | pokemonHeight}}</td>
+                <td>
+                    <pokemon-rarity [rarity]="pokemon.rarity"
+                                    (rarityClickEvent)="onRarityClicked($event)">
+                    </pokemon-rarity>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
