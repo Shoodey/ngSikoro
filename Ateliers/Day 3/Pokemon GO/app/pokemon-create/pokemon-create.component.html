@@ -1,0 +1,28 @@
+<h3 class="page-header">{{title}} <em>{{errorMessage}}</em></h3>
+
+<pre *ngIf="pokemon">Saved new pokemon: <br>{{pokemon | json}}</pre>
+
+<div class="panel panel-primary">
+    <div class="panel-heading"></div>
+
+    <div class="panel-body">
+        <form class="form-horizontal" [formGroup]="pokemonForm" (ngSumbit)="save()">
+
+            <div class="form-group">
+                <label class="col-sm-2 control-label">Name</label>
+                <div class="col-sm-4">
+                    <input type="text" class="form-control" formControlName="name">
+                    <small class="text-red"
+                           [hidden]="pokemonForm.controls.name.valid || pokemonForm.controls.name.pristine"
+                    >
+                       need underscore ! {{pokemonForm.controls.name.errors | json }}
+                    </small>
+
+                    <small *ngIf="pokemonForm.controls.name.errors.required"> REQUIS</small>
+                    <small *ngIf="pokemonForm.controls.name.errors.underscoreCheck"> UNDS</small>
+                    <small *ngIf="pokemonForm.controls.name.errors.invalidType"> TYPE</small>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>

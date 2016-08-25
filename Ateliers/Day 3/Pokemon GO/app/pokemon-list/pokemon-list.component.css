@@ -1,0 +1,21 @@
+img{
+    width: 100px;
+}
+
+.label{
+    font-size: 12px;
+    color: black;
+}
+
+.label-green {
+    background-color: #68AE28;
+}
+.label-red  {
+    background-color: #E50020;
+}
+.label-blue {
+    background-color: #749eff;
+}
+.label-yellow {
+    background-color: #FFD624;
+}

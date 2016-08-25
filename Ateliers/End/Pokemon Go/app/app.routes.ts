@@ -13,6 +13,6 @@ const routes: RouterConfig = [
     { path: '**', component: PageNotFoundComponent }
 ];
 
-export const AppRouterProviders = [
+export const AppRouterProvider = [
     provideRouter(routes)
 ];

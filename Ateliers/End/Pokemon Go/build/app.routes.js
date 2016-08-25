@@ -12,7 +12,7 @@ var routes = [
     { path: 'pokemons/edit/:id', component: pokemon_edit_component_1.PokemonEditComponent },
     { path: '**', component: _404_component_1.PageNotFoundComponent }
 ];
-exports.AppRouterProviders = [
+exports.AppRouterProvider = [
     router_1.provideRouter(routes)
 ];
 //# sourceMappingURL=app.routes.js.map

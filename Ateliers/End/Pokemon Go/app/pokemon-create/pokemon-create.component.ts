@@ -1,6 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {Validators} from '@angular/common';
 import {REACTIVE_FORM_DIRECTIVES, FormGroup, FormControl, FormBuilder} from '@angular/forms';
+import {CustomValidator} from '../validators/custom.validator';
 
 
 import {PokemonUcfirstPipe} from "../pipes/pokemon-ucfirst.pipe";
@@ -16,7 +17,7 @@ import {PokemonService} from "../shared/pokemon.service";
 export class PokemonCreateComponent implements OnInit {
 
     title:string = "Nouveau pokémon";
-    types:string[] = ["plante", "eau", "feu", "electrique"];
+    types:string[] = ["plante", "eau", "feu", "electrique", "test"];
     pokemon:IPokemon;
     errorMessage:string;
 
@@ -25,6 +26,15 @@ export class PokemonCreateComponent implements OnInit {
 
 
     constructor(private _pokemonService:PokemonService, private _fb:FormBuilder) {
+        this.pf = _fb.group({
+            name: ['', [Validators.required, Validators.minLength(5)]],
+            code: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(3)]],
+            type: ['', [CustomValidator.isAType]],
+            image: ['', [CustomValidator.underscoreCheck]],
+            rarity: [''],
+            height: [''],
+            weight: [''],
+        });
     }
 
     ngOnInit() {
@@ -35,18 +45,19 @@ export class PokemonCreateComponent implements OnInit {
         // });
 
         // the short way
-        this.pf = this._fb.group({
-            name: ['', [<any>Validators.required, <any>Validators.minLength(5)]]
-        });
+        // this.pf = this._fb.group({
+        //     name: ['', [<any>Validators.required, <any>Validators.minLength(5)]],
+        //     code: ['', [<any>Validators.required, <any>Validators.minLength(5)]]
+        // });
 
     }
 
-    save(pokemon:IPokemon, isValid:boolean):void {
-        this.submitted = true; // set form submit to true
-
-        // check if model is valid
-        // if valid, call API to save customer
-        console.log(pokemon, isValid);
+    save():void {
+        this._pokemonService.savePokemon(this.pf.value)
+            .subscribe(
+                pokemon => this.pokemon = pokemon,
+                error => this.errorMessage = <any>error
+            );
     }
 
 

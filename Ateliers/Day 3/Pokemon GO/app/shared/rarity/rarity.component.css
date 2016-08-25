@@ -1,0 +1,12 @@
+.crop {
+    overflow: hidden;
+}
+
+div {
+    cursor: pointer;
+}
+
+.pokeball {
+    color: black;
+    font-weight: 200;
+}

@@ -11,6 +11,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 var core_1 = require('@angular/core');
 var common_1 = require('@angular/common');
 var forms_1 = require('@angular/forms');
+var custom_validator_1 = require('../validators/custom.validator');
 var pokemon_ucfirst_pipe_1 = require("../pipes/pokemon-ucfirst.pipe");
 var pokemon_service_1 = require("../shared/pokemon.service");
 var PokemonCreateComponent = (function () {
@@ -18,7 +19,16 @@ var PokemonCreateComponent = (function () {
         this._pokemonService = _pokemonService;
         this._fb = _fb;
         this.title = "Nouveau pokémon";
-        this.types = ["plante", "eau", "feu", "electrique"];
+        this.types = ["plante", "eau", "feu", "electrique", "test"];
+        this.pf = _fb.group({
+            name: ['', [common_1.Validators.required, common_1.Validators.minLength(5)]],
+            code: ['', [common_1.Validators.required, common_1.Validators.minLength(3), common_1.Validators.maxLength(3)]],
+            type: ['', [custom_validator_1.CustomValidator.isAType]],
+            image: ['', [custom_validator_1.CustomValidator.underscoreCheck]],
+            rarity: [''],
+            height: [''],
+            weight: [''],
+        });
     }
     PokemonCreateComponent.prototype.ngOnInit = function () {
         // the long way
@@ -26,15 +36,15 @@ var PokemonCreateComponent = (function () {
         //     name: new FormControl('', [<any>Validators.required, <any>Validators.minLength(5)])
         // });
         // the short way
-        this.pf = this._fb.group({
-            name: ['', [common_1.Validators.required, common_1.Validators.minLength(5)]]
-        });
+        // this.pf = this._fb.group({
+        //     name: ['', [<any>Validators.required, <any>Validators.minLength(5)]],
+        //     code: ['', [<any>Validators.required, <any>Validators.minLength(5)]]
+        // });
     };
-    PokemonCreateComponent.prototype.save = function (pokemon, isValid) {
-        this.submitted = true; // set form submit to true
-        // check if model is valid
-        // if valid, call API to save customer
-        console.log(pokemon, isValid);
+    PokemonCreateComponent.prototype.save = function () {
+        var _this = this;
+        this._pokemonService.savePokemon(this.pf.value)
+            .subscribe(function (pokemon) { return _this.pokemon = pokemon; }, function (error) { return _this.errorMessage = error; });
     };
     PokemonCreateComponent = __decorate([
         core_1.Component({

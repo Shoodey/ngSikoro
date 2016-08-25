@@ -6,7 +6,7 @@
     <div class="panel-heading"></div>
 
     <div class="panel-body">
-        <form class="form-horizontal" [formGroup]="pf" novalidate (ngSubmit)="save(pf.value, pf.valid)">
+        <form class="form-horizontal" [formGroup]="pf" novalidate (ngSubmit)="save()">
 
             <div class="form-group">
                 <label class="col-sm-2 control-label">Name</label>
@@ -19,33 +19,39 @@
 
                 <label class="col-sm-2 control-label">Code</label>
                 <div class="col-sm-4">
-                    <input type="text" class="form-control">
+                    <input type="text" class="form-control" formControlName="code">
+                    <small class="text-red" [hidden]="pf.controls.code.valid || (pf.controls.code.untouched && !submitted)">
+                        Code is required (= 3 characters).
+                    </small>
                 </div>
             </div>
 
             <div class="form-group">
                 <label class="col-sm-2 control-label">Type</label>
                 <div class="col-sm-4">
-                    <select class="form-control">
+                    <select class="form-control" formControlName="type">
                         <option *ngFor="let type of types" [value]="type">{{type | pokemonUcfirst}}</option>
                     </select>
+                    <small class="text-red" [hidden]="pf.controls.type.valid || (pf.controls.type.pristine && !submitted)">
+                        Type must have an underscore. {{ pf.controls.type.errors | json }}
+                    </small>
                 </div>
 
                 <label class="col-sm-2 control-label">Rarité</label>
                 <div class="col-sm-4">
-                    <input type="number" min="1" max="5" step="1" value="1">
+                    <input type="number" min="1" max="5" step="1" value="1"  formControlName="rarity">
                 </div>
             </div>
 
             <div class="form-group">
                 <label class="col-sm-2 control-label">Poids</label>
                 <div class="col-sm-4">
-                    <input type="text" class="form-control">
+                    <input type="text" class="form-control"  formControlName="weight">
                 </div>
 
                 <label class="col-sm-2 control-label">Hauteur</label>
                 <div class="col-sm-4">
-                    <input type="text" class="form-control">
+                    <input type="text" class="form-control" formControlName="height">
                 </div>
             </div>
 
@@ -53,13 +59,16 @@
             <div class="form-group">
                 <label class="col-sm-2 control-label">Image</label>
                 <div class="col-sm-10">
-                    <input type="text" class="form-control" placeholder="Nom du fichier sans extension (charmander)">
+                    <input type="text" class="form-control" placeholder="Nom du fichier sans extension (charmander)" formControlName="image">
+                    <small class="text-red" [hidden]="pf.controls.image.valid || (pf.controls.image.pristine && !submitted)">
+                        Type must have an underscore. {{ pf.controls.image.errors | json }}
+                    </small>
                 </div>
             </div>
 
             <div class="form-group">
                 <div class="col-sm-offset-2 col-sm-10">
-                    <button class="btn btn-primary pull-right">
+                    <button class="btn btn-primary pull-right" [disabled]="!pf.valid">
                         Enregistrer
                     </button>
                 </div>

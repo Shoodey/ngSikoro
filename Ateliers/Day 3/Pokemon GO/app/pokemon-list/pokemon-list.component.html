@@ -1,0 +1,56 @@
+<h3 class="page-header">{{title}}</h3>
+
+<div class="panel panel-primary" *ngIf="pokemons && pokemons.length">
+    <div class="panel-heading"></div>
+
+    <div class="panel-body">
+        <div class="row">
+            <div class="col-sm-8">
+                <p>Filtre: {{filterBy}}</p>
+            </div>
+            <div class="col-sm-4">
+                Filter par
+                <input type="text" [(ngModel)]="filterBy">
+            </div>
+        </div>
+
+        <hr>
+
+        <table class="table table-striped">
+            <thead>
+            <tr>
+                <th>
+                    <button class="btn btn-primary" (click)="toggleImage()">
+                        <span *ngIf="!imageState">Show Image</span>
+                        <span *ngIf="imageState">Hide Image</span>
+                    </button>
+                </th>
+                <th>Nom</th>
+                <th>Code</th>
+                <th>Type</th>
+                <th>Poids</th>
+                <th>Taille</th>
+                <th>Rareté</th>
+            </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let pokemon of pokemons | pokemonFilterPipe:filterBy">
+                    <td><a *ngIf="imageState" routerLink="/pokemons/edit/{{pokemon.id}}"><img [src]="pokemon.image" ></a></td>
+                    <td>{{ pokemon.name | pokemonUcFirst}}</td>
+                    <td>{{ pokemon.code }}</td>
+
+                    <td [ngSwitch]="pokemon.type">
+                        <span *ngSwitchCase="'feu'" class="label label-red">{{pokemon.type}}</span>
+                        <span *ngSwitchCase="'electrique'" class="label label-yellow">{{pokemon.type}}</span>
+                        <span *ngSwitchCase="'eau'" class="label label-blue">{{pokemon.type}}</span>
+                        <span *ngSwitchDefault class="label label-default">{{pokemon.type}}</span>
+                    </td>
+
+                    <td>{{ pokemon.weight | pokemonWeightPipe}}</td>
+                    <td>{{ pokemon.height | pokemonHeightPipe}}</td>
+                    <pokemon-rarity [rarity]="pokemon.rarity" (rarityClickedEvent)="onRarityClicked($event)"></pokemon-rarity>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
