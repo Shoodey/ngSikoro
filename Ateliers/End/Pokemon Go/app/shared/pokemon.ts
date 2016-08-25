@@ -1,14 +1,14 @@
 export interface IPokemon {
-    name: string;
-    code: string;
-    type: string,
-    weight: number;
-    height: number;
-    rarity: number;
-    image: string;
+    name:string;
+    code:string;
+    type:string;
+    weight:number;
+    height:number;
+    rarity:number;
+    image:string;
 }
 
-export class Pokemon{
+export class Pokemon {
 
     constructor() {
 

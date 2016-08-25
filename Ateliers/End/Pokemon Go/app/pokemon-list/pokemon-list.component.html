@@ -35,10 +35,10 @@
             <tbody>
             <tr *ngFor="let pokemon of pokemons | pokemonFilter:filterBy">
                 <td>
-                    <img *ngIf="showImage"
-                         class="pokemon-image center-block"
-                         [src]="pokemon.image"
-                         [title]="pokemon.name">
+                    <a [routerLink]="['/pokemons/edit', pokemon.id]"><img *ngIf="showImage"
+                                                     class="pokemon-image center-block"
+                                                     [src]="pokemon.image"
+                                                     [title]="pokemon.name"></a>
                 </td>
                 <td>{{pokemon.name | pokemonUcfirst}}</td>
                 <td>{{pokemon.code}}</td>

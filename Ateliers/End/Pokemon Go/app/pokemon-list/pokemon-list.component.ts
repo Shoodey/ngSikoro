@@ -1,5 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {NgSwitch, NgSwitchCase, NgSwitchDefault} from '@angular/common';
+import { ROUTER_DIRECTIVES } from '@angular/router';
 
 import {IPokemon} from './../shared/pokemon';
 import {PokemonService} from "../shared/pokemon.service";
@@ -16,7 +17,8 @@ import {PokemonUcfirstPipe} from "../pipes/pokemon-ucfirst.pipe";
     templateUrl: 'app/pokemon-list/pokemon-list.component.html',
     styleUrls: ['app/pokemon-list/pokemon-list.component.css'],
     pipes: [PokemonFilterPipe, PokemonWeightPipe, PokemonHeightPipe, PokemonUcfirstPipe],
-    directives: [NgSwitch, NgSwitchCase, NgSwitchDefault, PokemonRarityComponent]
+    directives: [NgSwitch, NgSwitchCase, NgSwitchDefault, PokemonRarityComponent, ROUTER_DIRECTIVES],
+
 })
 export class PokemonListComponent implements OnInit {
 
@@ -43,6 +45,6 @@ export class PokemonListComponent implements OnInit {
     }
 
     onRarityClicked(message:string):void {
-        console.log(message);
+        alert(message);
     }
 }

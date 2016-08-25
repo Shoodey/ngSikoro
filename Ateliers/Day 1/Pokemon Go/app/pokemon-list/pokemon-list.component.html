@@ -1,4 +1,4 @@
-<h3 class="page-header">{{title}} <em>{{errorMessage}}</em></h3>
+<h3 class="page-header">{{title}}</h3>
 
 <div class="panel panel-primary" *ngIf="pokemons && pokemons.length">
     <div class="panel-heading"></div>
@@ -6,11 +6,11 @@
     <div class="panel-body">
         <div class="row">
             <div class="col-sm-8">
-                <p>Filtre: <strong>{{filterBy}}</strong></p>
+                <p>Filtre: </p>
             </div>
             <div class="col-sm-4">
                 Filter par
-                <input type="text" [(ngModel)]="filterBy">
+                <input type="text" >
             </div>
         </div>
 
@@ -21,7 +21,8 @@
             <tr>
                 <th>
                     <button class="btn btn-primary" (click)="toggleImage()">
-                        <i class="fa" [ngClass]="{'fa-eye': showImage, 'fa-eye-slash': !showImage}"></i> Photo
+                        <span *ngIf="!imageState">Show Image</span>
+                        <span *ngIf="imageState">Hide Image</span>
                     </button>
                 </th>
                 <th>Nom</th>
@@ -33,30 +34,15 @@
             </tr>
             </thead>
             <tbody>
-            <tr *ngFor="let pokemon of pokemons | pokemonFilter:filterBy">
-                <td>
-                    <img *ngIf="showImage"
-                         class="pokemon-image center-block"
-                         [src]="pokemon.image"
-                         [title]="pokemon.name">
-                </td>
-                <td>{{pokemon.name | pokemonUcfirst}}</td>
-                <td>{{pokemon.code}}</td>
-                <td [ngSwitch]="pokemon.type">
-                    <span *ngSwitchCase="'plante'" class="label label-grass">{{pokemon.type | pokemonUcfirst}}</span>
-                    <span *ngSwitchCase="'feu'" class="label label-fire">{{pokemon.type | pokemonUcfirst}}</span>
-                    <span *ngSwitchCase="'eau'" class="label label-water">{{pokemon.type | pokemonUcfirst}}</span>
-                    <span *ngSwitchCase="'electrique'" class="label label-electric">{{pokemon.type | pokemonUcfirst}}</span>
-                    <span *ngSwitchDefault class="label label-default">{{pokemon.type | pokemonUcfirst}}</span>
-                </td>
-                <td>{{pokemon.weight | pokemonWeight}}</td>
-                <td>{{pokemon.height | pokemonHeight}}</td>
-                <td>
-                    <pokemon-rarity [rarity]="pokemon.rarity"
-                                    (rarityClickEvent)="onRarityClicked($event)">
-                    </pokemon-rarity>
-                </td>
-            </tr>
+                <tr *ngFor="let pokemon of pokemons">
+                    <td><img [src]="pokemon.image" *ngIf="imageState"></td>
+                    <td>{{ pokemon.name }}</td>
+                    <td>{{ pokemon.code }}</td>
+                    <td>{{ pokemon.type }}</td>
+                    <td>{{ pokemon.weight }}</td>
+                    <td>{{ pokemon.height }}</td>
+                    <td>{{ pokemon.rarity }}</td>
+                </tr>
             </tbody>
         </table>
     </div>

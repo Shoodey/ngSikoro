@@ -16,24 +16,35 @@ var PokemonService = (function () {
         this._http = _http;
         this._url = "http://localhost/Pokemon/public/api/pokemons";
     }
+    PokemonService.prototype.getPokemon = function (id) {
+        return this._http.get(this._url + "/" + id)
+            .map(PokemonService.extractData)
+            .do(function (data) { return console.log("Loaded pokemon."); })
+            .catch(PokemonService.handleError);
+    };
     PokemonService.prototype.getPokemons = function () {
         return this._http.get(this._url)
-            .map(this.extractData)
+            .map(PokemonService.extractData)
             .do(function (data) { return console.log("Loaded " + data.length + " pokemons."); })
-            .catch(this.handleError);
+            .catch(PokemonService.handleError);
     };
     PokemonService.prototype.savePokemon = function (pokemon) {
-        pokemon.image = "assets/img/" + pokemon.image + ".png";
         return this._http.post(this._url + "/create", pokemon)
-            .map(this.extractData)
-            .do(function (data) { return console.log("Saved new pokemon"); })
-            .catch(this.handleError);
+            .map(PokemonService.extractData)
+            .do(function (data) { return console.log("Saved new pokemon."); })
+            .catch(PokemonService.handleError);
     };
-    PokemonService.prototype.extractData = function (response) {
+    PokemonService.prototype.editPokemon = function (id, pokemon) {
+        return this._http.post(this._url + "/edit/" + id, pokemon)
+            .map(PokemonService.extractData)
+            .do(function (data) { return console.log("Edited the pokemon " + pokemon.name + "."); })
+            .catch(PokemonService.handleError);
+    };
+    PokemonService.extractData = function (response) {
         var body = response.json();
         return body || {};
     };
-    PokemonService.prototype.handleError = function (error) {
+    PokemonService.handleError = function (error) {
         var errMsg = (error.message) ? error.message :
             error.status ? error.status + " - " + error.statusText : 'Server error';
         console.error(errMsg); // log to console instead

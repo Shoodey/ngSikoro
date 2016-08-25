@@ -9,27 +9,41 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 var core_1 = require('@angular/core');
+var common_1 = require('@angular/common');
+var forms_1 = require('@angular/forms');
 var pokemon_ucfirst_pipe_1 = require("../pipes/pokemon-ucfirst.pipe");
 var pokemon_service_1 = require("../shared/pokemon.service");
 var PokemonCreateComponent = (function () {
-    function PokemonCreateComponent(_pokemonService) {
+    function PokemonCreateComponent(_pokemonService, _fb) {
         this._pokemonService = _pokemonService;
+        this._fb = _fb;
         this.title = "Nouveau pokémon";
         this.types = ["plante", "eau", "feu", "electrique"];
     }
-    PokemonCreateComponent.prototype.save = function (e, valid, value) {
-        var _this = this;
-        e.preventDefault();
-        this._pokemonService.savePokemon(value)
-            .subscribe(function (pokemon) { return _this.pokemon = pokemon; }, function (error) { return _this.errorMessage = error; });
+    PokemonCreateComponent.prototype.ngOnInit = function () {
+        // the long way
+        // this.pf = new FormGroup({
+        //     name: new FormControl('', [<any>Validators.required, <any>Validators.minLength(5)])
+        // });
+        // the short way
+        this.pf = this._fb.group({
+            name: ['', [common_1.Validators.required, common_1.Validators.minLength(5)]]
+        });
+    };
+    PokemonCreateComponent.prototype.save = function (pokemon, isValid) {
+        this.submitted = true; // set form submit to true
+        // check if model is valid
+        // if valid, call API to save customer
+        console.log(pokemon, isValid);
     };
     PokemonCreateComponent = __decorate([
         core_1.Component({
             templateUrl: 'app/pokemon-create/pokemon-create.component.html',
             styleUrls: ['app/pokemon-create/pokemon-create.component.css'],
-            pipes: [pokemon_ucfirst_pipe_1.PokemonUcfirstPipe]
+            pipes: [pokemon_ucfirst_pipe_1.PokemonUcfirstPipe],
+            directives: [forms_1.REACTIVE_FORM_DIRECTIVES],
         }), 
-        __metadata('design:paramtypes', [pokemon_service_1.PokemonService])
+        __metadata('design:paramtypes', [pokemon_service_1.PokemonService, forms_1.FormBuilder])
     ], PokemonCreateComponent);
     return PokemonCreateComponent;
 }());

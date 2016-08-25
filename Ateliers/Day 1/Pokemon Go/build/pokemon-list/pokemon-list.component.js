@@ -9,39 +9,50 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 var core_1 = require('@angular/core');
-var common_1 = require('@angular/common');
-var pokemon_service_1 = require("../shared/pokemon.service");
-var rarity_component_1 = require("./../shared/rarity/rarity.component");
-var pokemon_filter_pipe_1 = require("../pipes/pokemon-filter.pipe");
-var pokemon_weight_pipe_1 = require("../pipes/pokemon-weight.pipe");
-var pokemon_height_pipe_1 = require("../pipes/pokemon-height.pipe");
-var pokemon_ucfirst_pipe_1 = require("../pipes/pokemon-ucfirst.pipe");
 var PokemonListComponent = (function () {
-    function PokemonListComponent(_pokemonService) {
-        this._pokemonService = _pokemonService;
-        this.title = "Liste des pokémons";
-        this.showImage = true;
+    function PokemonListComponent() {
+        this.title = "Liste des Pokémons";
+        this.pokemons = [
+            {
+                "name": "Pikachu",
+                "code": "025",
+                "type": "electrique",
+                "weight": 6,
+                "height": 0.41,
+                "rarity": 4.5,
+                "image": "assets/img/pikachu.png"
+            },
+            {
+                "name": "Carapuce",
+                "code": "025",
+                "type": "electrique",
+                "weight": 6,
+                "height": 0.41,
+                "rarity": 4.5,
+                "image": "assets/img/pikachu.png"
+            },
+            {
+                "name": "Bulbasaur",
+                "code": "025",
+                "type": "electrique",
+                "weight": 6,
+                "height": 0.41,
+                "rarity": 4.5,
+                "image": "assets/img/pikachu.png"
+            },
+        ];
+        this.imageState = false;
     }
-    PokemonListComponent.prototype.ngOnInit = function () {
-        var _this = this;
-        this._pokemonService.getPokemons()
-            .subscribe(function (pokemons) { return _this.pokemons = pokemons; }, function (error) { return _this.errorMessage = error; });
-    };
     PokemonListComponent.prototype.toggleImage = function () {
-        this.showImage = !this.showImage;
-    };
-    PokemonListComponent.prototype.onRarityClicked = function (message) {
-        console.log(message);
+        this.imageState = !this.imageState;
     };
     PokemonListComponent = __decorate([
         core_1.Component({
             selector: 'pokemon-list',
-            templateUrl: 'app/pokemon-list/pokemon-list.component.html',
-            styleUrls: ['app/pokemon-list/pokemon-list.component.css'],
-            pipes: [pokemon_filter_pipe_1.PokemonFilterPipe, pokemon_weight_pipe_1.PokemonWeightPipe, pokemon_height_pipe_1.PokemonHeightPipe, pokemon_ucfirst_pipe_1.PokemonUcfirstPipe],
-            directives: [common_1.NgSwitch, common_1.NgSwitchCase, common_1.NgSwitchDefault, rarity_component_1.PokemonRarityComponent]
+            templateUrl: "app/pokemon-list/pokemon-list.component.html",
+            styleUrls: ["app/pokemon-list/pokemon-list.component.css"]
         }), 
-        __metadata('design:paramtypes', [pokemon_service_1.PokemonService])
+        __metadata('design:paramtypes', [])
     ], PokemonListComponent);
     return PokemonListComponent;
 }());

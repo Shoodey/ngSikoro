@@ -6,43 +6,46 @@
     <div class="panel-heading"></div>
 
     <div class="panel-body">
-        <form class="form-horizontal" #pf="ngForm" (submit)="save($event, pf.valid, pf.value)" novalidate>
+        <form class="form-horizontal" [formGroup]="pf" novalidate (ngSubmit)="save(pf.value, pf.valid)">
 
             <div class="form-group">
                 <label class="col-sm-2 control-label">Name</label>
                 <div class="col-sm-4">
-                    <input type="text" class="form-control" name="name" placeholder="Name" required ngModel>
+                    <input type="text" class="form-control" formControlName="name">
+                    <small class="text-red" [hidden]="pf.controls.name.valid || (pf.controls.name.pristine && !submitted)">
+                        Name is required (minimum 5 characters).
+                    </small>
                 </div>
 
                 <label class="col-sm-2 control-label">Code</label>
                 <div class="col-sm-4">
-                    <input type="text" class="form-control" name="code" placeholder="Code" required ngModel>
+                    <input type="text" class="form-control">
                 </div>
             </div>
 
             <div class="form-group">
                 <label class="col-sm-2 control-label">Type</label>
                 <div class="col-sm-4">
-                    <select class="form-control" name="type" required ngModel>
+                    <select class="form-control">
                         <option *ngFor="let type of types" [value]="type">{{type | pokemonUcfirst}}</option>
                     </select>
                 </div>
 
                 <label class="col-sm-2 control-label">Rarité</label>
                 <div class="col-sm-4">
-                    <input type="number" min="1" max="5" step="1" value="1" required ngModel name="rarity">
+                    <input type="number" min="1" max="5" step="1" value="1">
                 </div>
             </div>
 
             <div class="form-group">
                 <label class="col-sm-2 control-label">Poids</label>
                 <div class="col-sm-4">
-                    <input type="text" class="form-control" placeholder="Poids" required ngModel name="weight">
+                    <input type="text" class="form-control">
                 </div>
 
                 <label class="col-sm-2 control-label">Hauteur</label>
                 <div class="col-sm-4">
-                    <input type="text" class="form-control" placeholder="Hauteur" required ngModel name="height">
+                    <input type="text" class="form-control">
                 </div>
             </div>
 
@@ -50,17 +53,13 @@
             <div class="form-group">
                 <label class="col-sm-2 control-label">Image</label>
                 <div class="col-sm-10">
-                    <input type="text" class="form-control" placeholder="Nom du fichier sans extension (charmander)"
-                           required ngModel name="image">
+                    <input type="text" class="form-control" placeholder="Nom du fichier sans extension (charmander)">
                 </div>
             </div>
 
-
             <div class="form-group">
                 <div class="col-sm-offset-2 col-sm-10">
-                    <button type="submit"
-                            class="btn btn-primary pull-right"
-                            [disabled]="!pf.valid">
+                    <button class="btn btn-primary pull-right">
                         Enregistrer
                     </button>
                 </div>

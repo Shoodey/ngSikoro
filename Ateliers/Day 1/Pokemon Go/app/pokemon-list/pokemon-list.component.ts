@@ -1,48 +1,46 @@
-import {Component, OnInit} from '@angular/core';
-import {NgSwitch, NgSwitchCase, NgSwitchDefault} from '@angular/common';
-
-import {IPokemon} from './../shared/pokemon';
-import {PokemonService} from "../shared/pokemon.service";
-
-import {PokemonRarityComponent} from "./../shared/rarity/rarity.component";
-
-import {PokemonFilterPipe} from "../pipes/pokemon-filter.pipe";
-import {PokemonWeightPipe} from "../pipes/pokemon-weight.pipe";
-import {PokemonHeightPipe} from "../pipes/pokemon-height.pipe";
-import {PokemonUcfirstPipe} from "../pipes/pokemon-ucfirst.pipe";
+import {Component} from '@angular/core';
 
 @Component({
     selector: 'pokemon-list',
-    templateUrl: 'app/pokemon-list/pokemon-list.component.html',
-    styleUrls: ['app/pokemon-list/pokemon-list.component.css'],
-    pipes: [PokemonFilterPipe, PokemonWeightPipe, PokemonHeightPipe, PokemonUcfirstPipe],
-    directives: [NgSwitch, NgSwitchCase, NgSwitchDefault, PokemonRarityComponent]
+    templateUrl: "app/pokemon-list/pokemon-list.component.html",
+    styleUrls: ["app/pokemon-list/pokemon-list.component.css"]
 })
-export class PokemonListComponent implements OnInit {
+export class PokemonListComponent{
+    title: string = "Liste des Pokémons";
 
-    title:string = "Liste des pokémons";
-    showImage:boolean = true;
-    errorMessage:string;
+    pokemons: any = [
+        {
+            "name" : "Pikachu",
+            "code" : "025",
+            "type" : "electrique",
+            "weight" : 6,
+            "height" : 0.41,
+            "rarity" : 4.5,
+            "image" : "assets/img/pikachu.png"
+        },
+        {
+            "name" : "Carapuce",
+            "code" : "025",
+            "type" : "electrique",
+            "weight" : 6,
+            "height" : 0.41,
+            "rarity" : 4.5,
+            "image" : "assets/img/pikachu.png"
+        },
+        {
+            "name" : "Bulbasaur",
+            "code" : "025",
+            "type" : "electrique",
+            "weight" : 6,
+            "height" : 0.41,
+            "rarity" : 4.5,
+            "image" : "assets/img/pikachu.png"
+        },
+    ];
 
-    pokemons:IPokemon[];
+    imageState: boolean = false;
 
-    constructor(private _pokemonService:PokemonService) {
-    }
-
-    ngOnInit():void {
-        this._pokemonService.getPokemons()
-            .subscribe(
-                pokemons => this.pokemons = pokemons,
-                error => this.errorMessage = <any>error
-            );
-    }
-
-
-    toggleImage():void {
-        this.showImage = !this.showImage;
-    }
-
-    onRarityClicked(message:string):void {
-        console.log(message);
+    toggleImage(): void{
+        this.imageState = !this.imageState;
     }
 }

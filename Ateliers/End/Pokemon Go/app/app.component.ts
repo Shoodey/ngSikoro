@@ -7,6 +7,8 @@ import {PokemonService} from "./shared/pokemon.service";
 import {PokemonListComponent} from "./pokemon-list/pokemon-list.component";
 import {HomeComponent} from "./home/home.component";
 import {PokemonCreateComponent} from "./pokemon-create/pokemon-create.component";
+import {PageNotFoundComponent} from "./404/404.component";
+import {PokemonEditComponent} from "./pokemon-edit/pokemon-edit.component";
 
 @Component({
     selector: 'app',
@@ -14,7 +16,7 @@ import {PokemonCreateComponent} from "./pokemon-create/pokemon-create.component"
     styleUrls: ['app/app.component.css'],
     directives: [PokemonListComponent, ROUTER_DIRECTIVES],
     providers: [PokemonService, HTTP_PROVIDERS],
-    precompile: [HomeComponent, PokemonListComponent, PokemonCreateComponent]
+    precompile: [HomeComponent, PokemonListComponent, PokemonCreateComponent, PokemonEditComponent, PageNotFoundComponent]
 })
 export class AppComponent {
 

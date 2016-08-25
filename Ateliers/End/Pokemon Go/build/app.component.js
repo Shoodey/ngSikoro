@@ -16,6 +16,8 @@ var pokemon_service_1 = require("./shared/pokemon.service");
 var pokemon_list_component_1 = require("./pokemon-list/pokemon-list.component");
 var home_component_1 = require("./home/home.component");
 var pokemon_create_component_1 = require("./pokemon-create/pokemon-create.component");
+var _404_component_1 = require("./404/404.component");
+var pokemon_edit_component_1 = require("./pokemon-edit/pokemon-edit.component");
 var AppComponent = (function () {
     function AppComponent() {
     }
@@ -26,7 +28,7 @@ var AppComponent = (function () {
             styleUrls: ['app/app.component.css'],
             directives: [pokemon_list_component_1.PokemonListComponent, router_1.ROUTER_DIRECTIVES],
             providers: [pokemon_service_1.PokemonService, http_1.HTTP_PROVIDERS],
-            precompile: [home_component_1.HomeComponent, pokemon_list_component_1.PokemonListComponent, pokemon_create_component_1.PokemonCreateComponent]
+            precompile: [home_component_1.HomeComponent, pokemon_list_component_1.PokemonListComponent, pokemon_create_component_1.PokemonCreateComponent, pokemon_edit_component_1.PokemonEditComponent, _404_component_1.PageNotFoundComponent]
         }), 
         __metadata('design:paramtypes', [])
     ], AppComponent);

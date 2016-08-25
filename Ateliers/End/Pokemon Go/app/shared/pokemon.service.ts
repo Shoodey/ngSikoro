@@ -11,28 +11,40 @@ export class PokemonService {
     constructor(private _http:Http) {
     }
 
+    getPokemon(id: number):Observable<IPokemon> {
+        return this._http.get(this._url + "/" + id)
+            .map(PokemonService.extractData)
+            .do(data => console.log("Loaded pokemon."))
+            .catch(PokemonService.handleError);
+    }
 
     getPokemons():Observable<IPokemon[]> {
         return this._http.get(this._url)
-            .map(this.extractData)
+            .map(PokemonService.extractData)
             .do(data => console.log("Loaded " + data.length + " pokemons."))
-            .catch(this.handleError);
+            .catch(PokemonService.handleError);
     }
 
     savePokemon(pokemon: IPokemon):Observable<IPokemon> {
-        pokemon.image = "assets/img/" + pokemon.image + ".png";
         return this._http.post(this._url + "/create", pokemon)
-            .map(this.extractData)
-            .do(data => console.log("Saved new pokemon"))
-            .catch(this.handleError);
+            .map(PokemonService.extractData)
+            .do(data => console.log("Saved new pokemon."))
+            .catch(PokemonService.handleError);
     }
 
-    private extractData(response:Response) {
+    editPokemon(id: number, pokemon: IPokemon):Observable<IPokemon> {
+        return this._http.post(this._url + "/edit/" + id, pokemon)
+            .map(PokemonService.extractData)
+            .do(data => console.log("Edited the pokemon " + pokemon.name + "."))
+            .catch(PokemonService.handleError);
+    }
+
+    private static extractData(response:Response) {
         let body = response.json();
         return body || {};
     }
 
-    private handleError(error:any) {
+    private static handleError(error:any) {
         let errMsg = (error.message) ? error.message :
             error.status ? `${error.status} - ${error.statusText}` : 'Server error';
         console.error(errMsg); // log to console instead
